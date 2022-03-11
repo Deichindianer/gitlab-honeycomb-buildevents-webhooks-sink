@@ -227,6 +227,28 @@ func handleRequest(defaultConfig *libhoney.Config, w http.ResponseWriter, req *h
 		}
 		return
 	}
+	// Load potential custom query parameters
+	// e.g. API key, dataset name, and honeycomb host
+	cfg := &libhoney.Config{}
+	query := req.URL.Query()
+	key := query.Get("key")
+	if key != "" {
+		cfg.APIKey = key
+	} else {
+		cfg.APIKey = defaultConfig.APIKey
+	}
+	dataset := query.Get("dataset")
+	if dataset != "" {
+		cfg.Dataset = dataset
+	} else {
+		cfg.Dataset = defaultConfig.Dataset
+	}
+	host := query.Get("host")
+	if host != "" {
+		cfg.APIHost = host
+	} else {
+		cfg.APIHost = defaultConfig.APIHost
+	}
 	if eventType == "Pipeline Hook" {
 		fmt.Println("Received pipeline webhook:", string(body))
 		handlePipeline(cfg, w, body)

@@ -23,7 +23,7 @@ import (
 var Version = "dev"
 
 func home(w http.ResponseWriter, _ *http.Request) {
-	_, err := fmt.Fprintf(w, `# GitLab Honeycomb Buildevents Webhooks Sink
+	_, err := fmt.Fprintf(w, `# GitLab HoneycombConfig Buildevents Webhooks Sink
 
 GET /healthz: healthcheck
 
@@ -259,11 +259,11 @@ func commandRoot(cfg *libhoney.Config) *cobra.Command {
 		Use:     "buildevents",
 		Short:   "buildevents creates events for your CI builds",
 		Long: `
-The buildevents executable creates Honeycomb events and tracing information
+The buildevents executable creates HoneycombConfig events and tracing information
 about your Continuous Integration builds.`,
 	}
 
-	root.PersistentFlags().StringVarP(&cfg.APIKey, "apikey", "k", "", "[env.BUILDEVENT_APIKEY] the Honeycomb authentication token")
+	root.PersistentFlags().StringVarP(&cfg.APIKey, "apikey", "k", "", "[env.BUILDEVENT_APIKEY] the HoneycombConfig authentication token")
 	if apikey, ok := os.LookupEnv("BUILDEVENT_APIKEY"); ok {
 		// https://github.com/spf13/viper/issues/461#issuecomment-366831834
 		err := root.PersistentFlags().Lookup("apikey").Value.Set(apikey)
@@ -272,7 +272,7 @@ about your Continuous Integration builds.`,
 		}
 	}
 
-	root.PersistentFlags().StringVarP(&cfg.Dataset, "dataset", "d", "buildevents", "[env.BUILDEVENT_DATASET] the name of the Honeycomb dataset to which to send these events")
+	root.PersistentFlags().StringVarP(&cfg.Dataset, "dataset", "d", "buildevents", "[env.BUILDEVENT_DATASET] the name of the HoneycombConfig dataset to which to send these events")
 	if dataset, ok := os.LookupEnv("BUILDEVENT_DATASET"); ok {
 		err := root.PersistentFlags().Lookup("dataset").Value.Set(dataset)
 		if err != nil {
@@ -280,7 +280,7 @@ about your Continuous Integration builds.`,
 		}
 	}
 
-	root.PersistentFlags().StringVarP(&cfg.APIHost, "apihost", "a", "https://api.honeycomb.io", "[env.BUILDEVENT_APIHOST] the hostname for the Honeycomb API server to which to send this event")
+	root.PersistentFlags().StringVarP(&cfg.APIHost, "apihost", "a", "https://api.honeycomb.io", "[env.BUILDEVENT_APIHOST] the hostname for the HoneycombConfig API server to which to send this event")
 	if apihost, ok := os.LookupEnv("BUILDEVENT_APIHOST"); ok {
 		err := root.PersistentFlags().Lookup("apihost").Value.Set(apihost)
 		if err != nil {
